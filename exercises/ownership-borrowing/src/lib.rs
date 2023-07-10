@@ -130,14 +130,3 @@ fn exercise8() {
         accounting.push(person);
     }
 }
-
-fn main() {
-    exercise1();
-    exercise2();
-    exercise3();
-    println!("{}", exercise4(42));
-    exercise5();
-    exercise6();
-    exercise7();
-    exercise8();
-}
