@@ -1,25 +1,42 @@
 // Exercise 1
 // Fill in the blank and fix the errors
 // Make it compile
+use std::fmt;
+#[derive(Debug)]
 enum MessageOne {
     Quit,
     Move { x: i32, y: i32 },
     Write(String),
     ChangeColor(i32, i32, i32),
 }
+impl fmt::Display for MessageOne {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            MessageOne::Quit => write!(f, "Quit"),
+            MessageOne::Move { x, y } => write!(f, "Move {{ x: {}, y: {} }}", x, y),
+            MessageOne::Write(s) => write!(f, "Write({})", s),
+            MessageOne::ChangeColor(r, g, b) => write!(f, "ChangeColor({}, {}, {})", r, g, b),
+        }
+    }
+}
+impl MessageOne{
+    
+    
+}
 fn show_message(msg: MessageOne) {
     println!("{}", msg);
 }
 
+
 fn exercise1() {
-    let msgs: __ = [
+    let msgs: [MessageOne; 3] = [
         MessageOne::Quit,
         MessageOne::Move { x: 1, y: 3 },
         MessageOne::ChangeColor(255, 255, 0),
     ];
 
     for msg in msgs {
-        show_message(msg)
+        show_message(msg);
     }
 }
 
@@ -28,6 +45,10 @@ fn exercise1() {
 // Make it compile
 // Run tests
 enum Message {
+    ChangeColor(u8, u8, u8),
+    Quit,
+    Echo(String),
+    Move(Point),
     // TODO: implement the message variant types based on their usage below
 }
 
@@ -60,6 +81,12 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
+        match message {
+            Message::ChangeColor(r,g ,b ) => self.change_color((r, g, b)) ,
+            Message::Quit => self.quit(),
+            Message::Echo(s) => self.echo(s),
+            Message::Move(p) => self.move_position(p),
+        }
         // TODO: create a match expression to process the different message variants
         // Remember: When passing a tuple as a function argument, you'll need extra parentheses: fn function((t, u, p, l, e))
     }
@@ -69,6 +96,8 @@ impl State {
 // Exercise 3
 // Fix the errors
 // Run tests
+#[derive(Debug)]
+#[derive(PartialEq)]
 enum Direction {
     North,
     East,
@@ -79,7 +108,10 @@ enum Direction {
 impl Direction {
     fn opposite(&self) -> Direction {
         match self {
-            //TODO
+            Direction::East => Direction::West,
+            Direction::West => Direction::East,
+            Direction::South => Direction::North,
+            Direction::North => Direction::South,
         }
     }
 }
@@ -89,6 +121,7 @@ impl Direction {
 // Implement logic :
 // Run tests
 // Enum representing arithmetic operations
+#[derive(Debug)]
 enum Operation {
     Add,
     Subtract,
@@ -100,6 +133,10 @@ enum Operation {
 fn perform_operation(operation: Operation, num1: f64, num2: f64) -> f64 {
     match operation {
         // TODO
+            Operation::Add => num1 + num2,
+            Operation::Subtract => num1 - num2,
+            Operation::Multiply => num1 * num2,
+            Operation::Divide => num1 / num2
     }
 }
 

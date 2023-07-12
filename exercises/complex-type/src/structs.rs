@@ -2,21 +2,29 @@
 // Fix the error
 // Make it compile
 // Run test
+#[derive(Debug)]
 struct Person {
     name: String,
     age: u8,
     hobby: String
 }
-fn exercise1() -> Person {
-    let age = 30;
-    // Hobby = Rust 
-    let p = Person {
-        name: String::from("sunface"),
-        age,
-        hobby: String::from("Rust")
-    };
+impl PartialEq for Person {
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name && self.age == other.age && self.hobby == other.hobby
+    }
+}
+impl Person {
+    fn exercise1() -> Person {
+        // Hobby = Rust 
+        let p = Person {
+            name: String::from("sunface"),
+            age: 30,
+            hobby: String::from("Rust")
+        };
 
-    p
+        p
+    }
+
 }
 
 // Exercise 2
@@ -39,12 +47,12 @@ impl Agent {
 
     // Get the name of the person
     fn get_name(&self) -> &str {
-        todo!()
+        &self.name
     }
 
     // Get the age of the person
     fn get_age(&self) -> u32 {
-        todo!()
+        self.age
     }
 }
 
@@ -52,6 +60,7 @@ impl Agent {
 // Fix the error
 // Make it compile
 // Run test
+#[derive(Debug)]
 struct Calculator {
     value: i32,
 }
@@ -61,18 +70,18 @@ impl Calculator {
         Calculator { value: 0 }
     }
 
-    fn add(&self, num: i32) {
+    fn add(&mut self, num: i32) {
         self.value += num;
     }
 
-    fn subtract(mut self, num: i32) {
+    fn subtract(&mut self, num: i32) {
         self.value -= num;
     }
-    fn clear(self) {
+    fn clear(&mut self) {
         self.value = 0;
     }
 
-    fn get_value(self) -> i32 {
+    fn get_value(&self) -> i32 {
         self.value
     }
 }
@@ -99,7 +108,7 @@ fn exercise4() {
         
     };
 
-    println!("user: {:#?}", u1);
+    println!("user: {:#?}", u2);
 
 }
 
@@ -122,10 +131,10 @@ fn exercise5() {
     });
 
     
-    let moved = foos[0];
+    let moved = &foos[0];
 
     
-    let moved_field = foos[0].str_val;
+    let moved_field = &foos[0].str_val;
 }
 
 // Exercise 6
@@ -153,12 +162,12 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        self.sender_country != self.recipient_country 
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here...
+    fn get_fees(&self, cents_per_gram: i32) -> i32 {
+        self.weight_in_grams * cents_per_gram
     }
 }
 
@@ -169,7 +178,7 @@ mod tests {
     // Test for exercise 1
     #[test]
     fn exercise1_should_work() {
-        let p = exercise1();
+        let p = Person::exercise1();
 
         let p_expectation = Person {
             name: String::from("sunface"),
