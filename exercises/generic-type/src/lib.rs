@@ -4,12 +4,14 @@
 
 struct Position<T> {
     x: T,
-    y: T
+    y: T,
 }
+
 fn exercise1() {
-    let integer = Position { x: 5, y: 10 };
-    let float = Position { x: 1.0, y: 4.0 };
+    let integer: Position<i32> = Position { x: 5, y: 10 };
+    let float: Position<f64> = Position { x: 1.0, y: 4.0 };
 }
+
 
 
 
@@ -54,24 +56,48 @@ fn exercise3() {
 // Implementing logic
 // Run tests
 
-fn find_max<T>(collection: &[T]) -> Option<&T> {
-    todo!()
+fn find_max<T: std::cmp::PartialOrd>(collection: &[T]) -> Option<&T> {
+    let mut max_value: Option<&T> = None;
+    for item in collection { 
+        if max_value.is_none() || Some(item) > max_value {
+            max_value = Some(item);
+        }
+    }
+    max_value
 }
 
 // Exercise 5 
 // Reverse the elements in a collection
 // Make it compile 
 // Run tests 
-fn reverse_collection<T>(collection: &[T]) {
-    todo!()
+// fn reverse_collection<T>(collection: &mut [T]) {
+//     collection.reverse()
+// }
+// Method 2 
+fn reverse_collection<T>(collection: &mut [T]) {
+    let half_length =collection.len()  / 2;
+    for i in 0..half_length {
+        let Elements_to_be_swapped = collection.len() - 1 - i ;
+        collection.swap(i, Elements_to_be_swapped);
+    }
 }
-
 
 // Exercise 6
 // Function to check if a collection contains a specific value
-fn contains_value<T>(collection: &[T], value: &T) -> bool {
-    todo!()
+// fn contains_value<T: std::cmp::PartialEq>(collection: &[T], value: &T) -> bool {
+//     collection.contains(value)
+// }
+// Method 2
+
+fn contains_value<T: std::cmp::PartialEq>(collection: &[T], value: &T) -> bool {
+    for item in collection{
+        if item == value {
+            return true;
+        }
+    }
+    false
 }
+
 
 // Unit tests
 #[cfg(test)]
